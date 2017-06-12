@@ -1,3 +1,10 @@
+""""
+Traverse a single domain,
+getLinks function takes in an URL and returns list of article
+based on the provided parameters. Main body loop randomly choose from
+a list link tag and then getting a new list of links for new article.
+"""
+
 from urllib.request import urlopen
 from urllib.error import HTTPError
 from bs4 import BeautifulSoup
