@@ -35,3 +35,13 @@ else:
         newArticle = links[random.randint(0, len(links)-1)].attrs["href"]
         print(newArticle)
         links = getLinks(newArticle)
+
+"""
+# Retrieve all URLs for article 
+if links is None:
+    print('Page or tag could not be found')
+else:
+    for link in links:
+        if 'href' in link.attrs:
+            print(link.attrs['href'])
+"""
