@@ -2,7 +2,8 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import re
 import string
-from collections import OrderedDict
+import operator
+
 
 def cleanInput(input):
     input = re.sub('\n+', " ", input)
@@ -10,7 +11,6 @@ def cleanInput(input):
     input = re.sub(' +',  " ", input)
     input = bytes(input, "UTF-8")
     input = input.decode('ascii', 'ignore')
-    input = input.upper()
     cleanInput = []
     input = input.split(' ')
     for item in input:
@@ -19,22 +19,26 @@ def cleanInput(input):
             cleanInput.append(item)
     return cleanInput
 
-
+# testing, playing
+content = str(urlopen("http://pythonscraping.com/files/inaugurationSpeech.txt").read(), 'utf-8')
+c = cleanInput(content)
+#print(c)
+print(content)
+"""
 def getNgrams(input, n):
     input = cleanInput(input)
-    output = dict()
+    output = {}
     for i in range(len(input)-n+1):
-        newNGRam = ' '.join(input[i:i+n])
-        if newNGRam in output:
-            output[newNGRam] += 1
-        else:
-            output[newNGRam] = 1
+        ngramTemp = " ".join(input[i:i+n])
+        if ngramTemp not in output:
+            output[ngramTemp] = 0
+        output[ngramTemp] += 1
     return output
 
-html = urlopen("http://en.wikipedia.org/wiki/Python_(programming_language)")
-bsObj = BeautifulSoup(html, 'html.parser')
-content = bsObj.find("div", {"id": "mw-content-text"}).get_text()
+
+content = str(urlopen("http://pythonscraping.com/files/inaugurationSpeech.txt").read(), 'utf-8')
 ngrams = getNgrams(content, 2)
-ngrams = OrderedDict(sorted(ngrams.items(), key=lambda t: t[1], reverse=True))
-print(ngrams)
-print("2-grams count is: ", + str(len(ngrams)))
+sortedNGram = sorted(ngrams.items(), key=operator.itemgetter(1), reverse=True)
+print(sortedNGram)
+
+"""
